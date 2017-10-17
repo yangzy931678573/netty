@@ -26,8 +26,12 @@ public class BootStrap {
             System.out.println("The server is starting in port : " + port);
             Socket socket;
             while (true) {
-                socket = server.accept();
+
+                socket = server.accept(); //程序阻塞在这里:如果启动线程来接受socket，就会导致无限多的线程被创建。阻塞是对资源的保护。
+
+                //创建线程处理请求
                 new Thread(new ServerHandler(socket)).start();
+                //进入下次循环
             }
         } catch (IOException e) {
             e.printStackTrace();
