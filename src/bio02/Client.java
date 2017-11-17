@@ -8,7 +8,7 @@ import java.net.Socket;
 
 /**
  * Created by Administrator on 2017/10/9.
- * Description:
+ * Description: bio客户端
  */
 public class Client {
     public static void main(String[] args){
@@ -28,7 +28,6 @@ public class Client {
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new PrintWriter(socket.getOutputStream(),true);
             out.println("QUERY TIME ORDER");
-            System.out.println("Send oreder 2 server succeed.");
             String resp = in.readLine();
             System.out.println("Now is : " + resp);
         } catch (IOException e) {
@@ -44,7 +43,6 @@ public class Client {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                in = null;
             }
             if (socket != null ){
                 try {

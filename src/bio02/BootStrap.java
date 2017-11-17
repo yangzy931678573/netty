@@ -28,6 +28,7 @@ public class BootStrap {
             ServerHandlerExecutePool singleExecutor = new ServerHandlerExecutePool(50,1000);
             while (true) {
                 socket = server.accept();
+                //这里使用线程池来控制线程资源，大大的减少了内存开销
                 singleExecutor.execute(new ServerHandler(socket));
             }
         } catch (IOException e) {

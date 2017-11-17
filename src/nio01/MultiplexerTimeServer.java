@@ -13,13 +13,12 @@ import java.util.Set;
 
 /**
  * Created by Administrator on 2017/10/10.
- * Description:
+ * Description: NIO服务器
  */
 public class MultiplexerTimeServer implements Runnable {
     private Selector selector;
     private ServerSocketChannel serverChannel;
     private volatile boolean stop;
-
 
     public MultiplexerTimeServer(int port) {
         try {
@@ -34,7 +33,6 @@ public class MultiplexerTimeServer implements Runnable {
             //启动时初始化错误，应该终止程序
             System.exit(1);
         }
-
     }
 
     public void stop() {

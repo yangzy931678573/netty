@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Administrator on 2017/10/9.
- * Description:
+ * Description: bio服务器线程池
  */
 public class ServerHandlerExecutePool {
     private ExecutorService executor ;
