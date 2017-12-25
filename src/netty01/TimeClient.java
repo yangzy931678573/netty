@@ -63,17 +63,22 @@ public class TimeClient {
         private final Logger logger = Logger.getLogger(TimeClient.class.getName());
         //在构造函数中也可以初始化 final常量
 
-        private final ByteBuf firstMessage;
+        private int counter;
+
+        private byte[] req;
 
         public TimeClientHandler() {
-            byte[] req = "QUERY TIME ORDER".getBytes();
-            firstMessage = Unpooled.buffer(req.length);
-            firstMessage.writeBytes(req);
+            req = ("QUERY TIME ORDER" + System.getProperty("line.separator")).getBytes();
         }
 
         @Override
         public void channelActive(ChannelHandlerContext context) throws Exception {
-            context.writeAndFlush(firstMessage);
+            ByteBuf message;
+            for (int i = 0; i < 100; i++) {
+                message = Unpooled.buffer(req.length);
+                message.writeBytes(req);
+                context.writeAndFlush(message);
+            }
         }
 
         @Override
@@ -82,7 +87,7 @@ public class TimeClient {
             byte[] resp = new byte[buf.readableBytes()];
             buf.readBytes(resp);
             String body = new String(resp, StandardCharsets.UTF_8);
-            System.out.println("Now is :" + body);
+            System.out.println("Now is :" + body + " ; \nthe counter is : " + ++counter);
         }
 
         @Override

@@ -29,7 +29,6 @@ public class TimeServer {
                     .childHandler(new ChildChannelHandler());//抽象类不能使用lambda表达式
             //绑定端口，同步等待成功
             ChannelFuture future = bootstrap.bind(port).sync();
-
             //等待服务监听端口关闭
             future.channel().closeFuture().sync();
         } finally {
@@ -64,23 +63,23 @@ public class TimeServer {
 
 
     private class TimeServerHandler extends ChannelInboundHandlerAdapter {
+        private int counter;
+
         @Override
         public void channelRead(ChannelHandlerContext context, Object message) throws Exception {
             ByteBuf buf = (ByteBuf) message;
             byte[] req = new byte[buf.readableBytes()];
             buf.readBytes(req);
-            String body = new String(req, StandardCharsets.UTF_8);
-            System.out.println("The time server receive order :" + body);
+            String body = new String(req, StandardCharsets.UTF_8)
+                    .substring(0, req.length - System.getProperty("line.separator").
+                            length());
+            System.out.println("The time server receive order : " + body
+                    + " ;\n the counter is : " + ++counter);
             String currentTime = "QUERY TIME ORDER".equalsIgnoreCase(body) ?
                     new Date(System.currentTimeMillis()).toString()
                     : "BAD QUERY";
             ByteBuf resp = Unpooled.copiedBuffer(currentTime.getBytes());
-            context.write(resp);
-        }
-
-        @Override
-        public void channelReadComplete(ChannelHandlerContext context) throws Exception {
-            context.flush();
+            context.writeAndFlush(resp);
         }
 
         @Override
