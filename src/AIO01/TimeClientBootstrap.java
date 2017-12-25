@@ -4,7 +4,7 @@ package AIO01;
  * Created by Administrator on 2017/10/17.
  * Description: AIO客户端
  */
-public class TimeClient {
+public class TimeClientBootstrap {
     public static void main(String[] args) {
         int port = 8080;
 

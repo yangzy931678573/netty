@@ -45,6 +45,7 @@ public class MultiplexerTimeServer implements Runnable {
             try {
                 //设置唤醒selector的时间，为 1s
                 selector.select(1000);
+
                 Set<SelectionKey> selectionKeys = selector.selectedKeys();
                 Iterator<SelectionKey> iterator = selectionKeys.iterator();
                 SelectionKey key;

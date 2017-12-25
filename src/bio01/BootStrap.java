@@ -27,7 +27,12 @@ public class BootStrap {
             Socket socket;
             while (true) {
 
-                socket = server.accept(); //程序阻塞在这里:如果启动线程来接受socket，就会导致无限多的线程被创建。阻塞是对资源的保护。
+                socket = server.accept();
+                // 程序阻塞在这里:如果启动线程来接收socket，就会导致无限多的线程被创建。阻塞是对资源的保护。
+                // 而且多线程接收意味着一次请求肯呢个被多次响应
+
+
+
 
                 //创建线程处理请求
                 new Thread(new ServerHandler(socket)).start();

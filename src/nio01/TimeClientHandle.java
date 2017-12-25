@@ -83,7 +83,7 @@ public class TimeClientHandle implements Runnable {
             if (key.isConnectable()) {
                 if (socketChannel.finishConnect()) {
                     socketChannel.register(selector, SelectionKey.OP_READ);
-                    doWrite(socketChannel);
+                    doWrite(socketChannel);//发送请求
                 } else {
                     System.exit(1);
                 }

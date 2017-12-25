@@ -42,6 +42,7 @@ public class ReadCompletionHandler implements CompletionHandler<Integer, ByteBuf
               ByteBuffer writeBuffer = ByteBuffer.allocate(bytes.length);
               writeBuffer.put(bytes);
               writeBuffer.flip();
+              //第一个是src , 第二个是目标对象
               channel.write(writeBuffer, writeBuffer, new CompletionHandler<Integer, ByteBuffer>() {
                   @Override
                   public void completed(Integer result, ByteBuffer attachment) {
