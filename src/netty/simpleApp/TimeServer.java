@@ -1,4 +1,4 @@
-package netty01;
+package netty.simpleApp;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.ByteBuf;
@@ -7,8 +7,9 @@ import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.LineBasedFrameDecoder;
+import io.netty.handler.codec.string.StringDecoder;
 
-import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 
@@ -23,9 +24,10 @@ public class TimeServer {
         EventLoopGroup workerGroup = new NioEventLoopGroup();
         try {
             ServerBootstrap bootstrap = new ServerBootstrap();
-            bootstrap.group(bossGroup)
-                    .channel(NioServerSocketChannel.class)
-                    .option(ChannelOption.SO_BACKLOG, 1024)
+
+            bootstrap.group(bossGroup, workerGroup)//配置主线程  和工作线程
+                    .channel(NioServerSocketChannel.class)//配置管道类
+                    .option(ChannelOption.SO_BACKLOG, 1024)//配置管道的参数
                     .childHandler(new ChildChannelHandler());//抽象类不能使用lambda表达式
             //绑定端口，同步等待成功
             ChannelFuture future = bootstrap.bind(port).sync();
@@ -53,31 +55,43 @@ public class TimeServer {
         }
     }
 
-
+    //管道处理器
     private class ChildChannelHandler extends ChannelInitializer<SocketChannel> {
+        //initChannel是唯一需要重写的方法，这里可以配置多个数据处理器
         @Override
         protected void initChannel(SocketChannel socketChannel) throws Exception {
-            socketChannel.pipeline().addLast(new TimeServerHandler());
+            socketChannel.pipeline()
+                    .addLast(new LineBasedFrameDecoder(1024))
+                    .addLast(new StringDecoder())
+                    .addLast(new TimeServerHandler());
+            //socketChannel.pipeline().addLast(new TimeServerHandler());未使用Netty的解码器
+
         }
     }
 
-
+    //用于数据交互的处理器
     private class TimeServerHandler extends ChannelInboundHandlerAdapter {
         private int counter;
 
         @Override
         public void channelRead(ChannelHandlerContext context, Object message) throws Exception {
+
+
+            /*未使用Netty的解码器
             ByteBuf buf = (ByteBuf) message;
             byte[] req = new byte[buf.readableBytes()];
             buf.readBytes(req);
             String body = new String(req, StandardCharsets.UTF_8)
                     .substring(0, req.length - System.getProperty("line.separator").
-                            length());
+                            length());*/
+            //分隔换行符解码器
+            String body = (String) message;
             System.out.println("The time server receive order : " + body
-                    + " ;\n the counter is : " + ++counter);
+                    + " ; the counter is : " + ++counter);
             String currentTime = "QUERY TIME ORDER".equalsIgnoreCase(body) ?
                     new Date(System.currentTimeMillis()).toString()
                     : "BAD QUERY";
+            currentTime += System.getProperty("line.separator");
             ByteBuf resp = Unpooled.copiedBuffer(currentTime.getBytes());
             context.writeAndFlush(resp);
         }

@@ -1,4 +1,4 @@
-package netty01;
+package netty.simpleApp;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
@@ -7,8 +7,9 @@ import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.LineBasedFrameDecoder;
+import io.netty.handler.codec.string.StringDecoder;
 
-import java.nio.charset.StandardCharsets;
 import java.util.logging.Logger;
 
 /**
@@ -23,12 +24,16 @@ public class TimeClient {
             Bootstrap bootstrap = new Bootstrap();
             //核心代码
             bootstrap.group(group).
-                    channel(NioSocketChannel.class).
-                    option(ChannelOption.TCP_NODELAY, true).
-                    handler(new ChannelInitializer<SocketChannel>() {
+                    channel(NioSocketChannel.class)
+                    .option(ChannelOption.TCP_NODELAY, true)
+                    .handler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
-                            socketChannel.pipeline().addLast(new TimeClientHandler());
+                            // socketChannel.pipeline().addLast(new EchoClientHandler());//未使用Netty的解码器
+                            socketChannel.pipeline()
+                                    .addLast(new LineBasedFrameDecoder(1024))
+                                    .addLast(new StringDecoder())
+                                    .addLast(new TimeClientHandler());
                         }
                     });
 
@@ -70,7 +75,7 @@ public class TimeClient {
         public TimeClientHandler() {
             req = ("QUERY TIME ORDER" + System.getProperty("line.separator")).getBytes();
         }
-
+        //管道处于激活状态，可以发送信息
         @Override
         public void channelActive(ChannelHandlerContext context) throws Exception {
             ByteBuf message;
@@ -83,16 +88,21 @@ public class TimeClient {
 
         @Override
         public void channelRead(ChannelHandlerContext context, Object msg) throws Exception {
+
+          /*  //未使用Netty的解码器
             ByteBuf buf = (ByteBuf) msg;
             byte[] resp = new byte[buf.readableBytes()];
             buf.readBytes(resp);
-            String body = new String(resp, StandardCharsets.UTF_8);
-            System.out.println("Now is :" + body + " ; \nthe counter is : " + ++counter);
+            String body = new String(resp, StandardCharsets.UTF_8);*/
+            String body = (String) msg;
+            System.out.println("Now is :" + body + " ; the counter is : " + ++counter);
         }
 
         @Override
         public void exceptionCaught(ChannelHandlerContext context, Throwable cause) throws Exception {
+            context.flush();
             logger.warning("Unexpected exception from downstream : " + cause.getMessage());
+            cause.printStackTrace();
             context.close();
         }
     }
