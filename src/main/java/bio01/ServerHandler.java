@@ -40,7 +40,7 @@ public class ServerHandler implements Runnable {
               /*  File file = new File("src/bio01/index.html");
 
                 if (file.exists()) {
-                   FileInputStream inputStream = new FileInputStream(file);
+                    FileInputStream inputStream = new FileInputStream(file);
 
                     long length = file.length();
                     InputStream inputStream = ServerHandler.class.getResourceAsStream("/bio01/index.html");
