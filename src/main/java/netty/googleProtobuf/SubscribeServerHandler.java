@@ -1,9 +1,7 @@
 package netty.googleProtobuf;
 
-import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import io.netty.util.concurrent.EventExecutorGroup;
 
 /**
  * Created by Administrator on 2017/12/27.

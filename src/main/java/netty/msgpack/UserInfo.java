@@ -1,7 +1,5 @@
 package netty.msgpack;
 
-import org.msgpack.annotation.Message;
-
 import java.io.Serializable;
 
 /**

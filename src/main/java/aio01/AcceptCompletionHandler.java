@@ -1,4 +1,4 @@
-package AIO01;
+package aio01;
 
 import java.nio.ByteBuffer;
 import java.nio.channels.AsynchronousSocketChannel;

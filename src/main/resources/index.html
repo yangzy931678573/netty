@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>欢迎</title>
+</head>
+<body>
+Welcome to index!
+</body>
+<script type="text/javascript">
+    window.onload = function () {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.open("GET","",true);
+        xmlhttp.send();
+        xmlhttp.onreadystatechange=function()
+        {
+            if (xmlhttp.readyState==4 && xmlhttp.status==200)
+            {
+                alert(xmlhttp.responseText);
+            }
+        }
+    }
+</script>
+</html>
