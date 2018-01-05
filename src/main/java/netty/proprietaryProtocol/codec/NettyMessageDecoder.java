@@ -20,8 +20,8 @@ import java.util.Map;
 public class NettyMessageDecoder extends LengthFieldBasedFrameDecoder {
     private MarshallingDecoderSupport support;
 
-    public NettyMessageDecoder(int maxObjectSize) {
-        super(maxObjectSize, 0, 4, 0, 4);
+    public NettyMessageDecoder(int maxFrameLength, int lengthFieldOffset, int lengthFieldLength) {
+        super(maxFrameLength, lengthFieldOffset, lengthFieldLength);
         support = new MarshallingDecoderSupport();
     }
 
@@ -60,5 +60,10 @@ public class NettyMessageDecoder extends LengthFieldBasedFrameDecoder {
             message.setBody(support.decode(in));
         message.setHeader(header);
         return message;
+    }
+
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+        cause.printStackTrace();
     }
 }

@@ -55,7 +55,13 @@ public final class NettyMessageEncoder extends MessageToMessageEncoder<NettyMess
         else
             send.writeInt(0);
         // 跳过的crcCode的4个字节,在第5个字节处写入Buffer的可读字节长度,替换掉原来的Header.length
-        // setInt以为着会替换5到8这几个字节
+        // setInt以为着会替换4到7这几个字节
         send.setInt(4, send.readableBytes());
+
+        list.add(send);
+    }
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+        cause.printStackTrace();
     }
 }
