@@ -1,8 +1,6 @@
 package test;
 
 import java.io.File;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 
 /**
  * Created by Administrator on 2017/12/28.

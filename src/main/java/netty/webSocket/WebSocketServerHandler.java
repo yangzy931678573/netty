@@ -11,10 +11,6 @@ import io.netty.handler.codec.http.websocketx.*;
 import io.netty.util.CharsetUtil;
 
 import java.util.Date;
-import java.util.Scanner;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.FutureTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -61,6 +57,7 @@ public class WebSocketServerHandler extends SimpleChannelInboundHandler<Object> 
         //判断是否是Ping消息
         if (frame instanceof PingWebSocketFrame) {
             ctx.channel().write(new PongWebSocketFrame(frame.content().retain()));
+            return;
         }
         //本例只支持文本消息，不支持二进制消息
         if (!(frame instanceof TextWebSocketFrame)) {
@@ -74,7 +71,7 @@ public class WebSocketServerHandler extends SimpleChannelInboundHandler<Object> 
         // 问题在与System.in这个流是同一个流,对于不同请求并不能做出处.
         /*Scanner scanner = new Scanner(System.in);
         while (true) {
-            String next = scanner.next();
+            String next = scanner.nextLine();//接收空格
             ctx.channel().writeAndFlush(new TextWebSocketFrame(next));//必须刷新
         }*/
         //callable接口的使用,没有必要!  Netty已经提供了线程组

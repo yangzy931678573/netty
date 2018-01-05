@@ -16,7 +16,7 @@ import io.netty.handler.logging.LoggingHandler;
 
 /**
  * Created by Administrator on 2017/12/25.
- * Description: NIO 时间服务器
+ * Description: NIO 时间服务器 , 这里使用 telnet 测试
  */
 public class EchoServer {
     public void bind(int port) throws Exception {
@@ -33,7 +33,9 @@ public class EchoServer {
                     .childHandler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
-                            socketChannel.pipeline().addLast(new FixedLengthFrameDecoder(20))
+                            socketChannel.pipeline()
+                                    //这意味着对请求的消息每20个字节读取一次
+                                    .addLast(new FixedLengthFrameDecoder(20))
                                     .addLast(new StringDecoder()).addLast(new EchoServerHandler());
                         }
                     });
