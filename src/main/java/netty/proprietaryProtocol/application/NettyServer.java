@@ -35,12 +35,7 @@ public class NettyServer {
                     @Override
                     protected void initChannel(SocketChannel channel) throws Exception {
                         channel.pipeline()
-                                .addLast(
-                                        "MessageDecoder",
-                                        //为了防止单条消息过大导致内容溢出或者畸形码流导致解码错位引起内存分配失败,
-                                        //需要对单条消息的最大长度进行限制
-                                        new NettyMessageDecoder(1024 * 1024,
-                                                4, 4))
+                                .addLast("MessageDecoder", new NettyMessageDecoder())
                                 .addLast("MessageEncoder", new NettyMessageEncoder())
                                 //Netty的ReadTimeoutHandler机制,默认50s没有读取到对方的任何消息时会主动关闭链路
                                 .addLast("ReadTimeoutHandler", new ReadTimeoutHandler(50))
