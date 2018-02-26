@@ -15,8 +15,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.regex.Pattern;
 
-import static io.netty.handler.codec.http.HttpHeaders.Names.*;
-import static io.netty.handler.codec.http.HttpHeaders.isKeepAlive;
 import static io.netty.handler.codec.http.HttpResponseStatus.*;
 
 /**
@@ -53,16 +51,16 @@ public class HttpFileServerHandler extends SimpleChannelInboundHandler<FullHttpR
             System.out.println(entry.getValue());
         }*/
 
-        if (!request.getDecoderResult().isSuccess()) {
+        if (!request.decoderResult().isSuccess()) {
             sendError(ctx, BAD_REQUEST);
             return;
         }
 
-        if (request.getMethod() != HttpMethod.GET) {
+        if (request.method() != HttpMethod.GET) {
             sendError(ctx, METHOD_NOT_ALLOWED);
             return;
         }
-        final String uri = request.getUri();
+        final String uri = request.uri();
         //根据请求的uri来获取对应的文件路径
         final String path = sanitizeUri(uri);
         if (path == null) {
@@ -98,11 +96,14 @@ public class HttpFileServerHandler extends SimpleChannelInboundHandler<FullHttpR
         long length = randomAccessFile.length();
         HttpResponse response = new DefaultHttpResponse(HttpVersion.HTTP_1_1, OK);
         //指明Content-Length,则即使没有关闭连接,数据也能被返回
-        setContentLength(response, length);
+        HttpUtil.setContentLength(response, length);
+
+        //设置返回类型
         setContentTypeHeader(response, file);
+
         //如果是长连接则在响应头中设置长连接属性
-        if (isKeepAlive(request)) {
-            response.headers().set(CONNECTION, HttpHeaders.Values.KEEP_ALIVE);
+        if (HttpUtil.isKeepAlive(request)) {
+            response.headers().set(HttpHeaderNames.CONNECTION, HttpHeaderValues.KEEP_ALIVE);
         }
         ctx.write(response);
         ChannelFuture sendFileFuture = ctx.write(
@@ -125,7 +126,7 @@ public class HttpFileServerHandler extends SimpleChannelInboundHandler<FullHttpR
         });
         ChannelFuture lastContentFuture = ctx.writeAndFlush(LastHttpContent.EMPTY_LAST_CONTENT);
         //不是长连接则及时关闭管道
-        if (!isKeepAlive(request)) {
+        if (!HttpUtil.isKeepAlive(request)) {
             lastContentFuture.addListener(ChannelFutureListener.CLOSE);
         }
     }
@@ -139,12 +140,9 @@ public class HttpFileServerHandler extends SimpleChannelInboundHandler<FullHttpR
 
 
     private void setContentTypeHeader(HttpResponse response, File file) {
+        //通过sun提供的mime类型文件集合来 返回file所属的mime类型
         MimetypesFileTypeMap mimetypesFileTypeMap = new MimetypesFileTypeMap();
-        response.headers().set(CONTENT_TYPE, mimetypesFileTypeMap.getContentType(file));
-    }
-
-    private void setContentLength(HttpResponse response, long length) {
-        response.headers().set(CONTENT_LENGTH, length);
+        response.headers().set(HttpHeaderNames.CONTENT_TYPE, mimetypesFileTypeMap.getContentType(file));
     }
 
     private String sanitizeUri(String uri) {
@@ -178,11 +176,11 @@ public class HttpFileServerHandler extends SimpleChannelInboundHandler<FullHttpR
 
     private static void sendFileList(ChannelHandlerContext ctx, File dir) {
         DefaultFullHttpResponse fullHttpResponse = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, OK);
-        fullHttpResponse.headers().set(CONTENT_TYPE, "text/html;charset=UTF-8");
+        fullHttpResponse.headers().set(HttpHeaderNames.CONTENT_TYPE, "text/html;charset=UTF-8");
         StringBuilder builder = new StringBuilder();
         builder.append("<html lang='en'><head><meta charset='UTF-8'><title>文件服务器</title></head><body><h1>目录 ")
                 .append(dir.getAbsolutePath() + "：</h1><br/><ul>")
-                .append("<li><a href='/../'>上级目录:</a></li>");//对于a链接来说 ../ 就是当前路径的上一级
+                .append("<li><a href='../'>上级目录:</a></li>");//对于a链接来说 ../ 就是当前路径的上一级
         for (File file : dir.listFiles()) {
             if (file.isHidden() || !file.canRead())
                 continue;
@@ -201,15 +199,15 @@ public class HttpFileServerHandler extends SimpleChannelInboundHandler<FullHttpR
 
     private void sendRedirect(ChannelHandlerContext ctx, String path) {
         DefaultFullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, FOUND);
-        response.headers().set(LOCATION, path);
+        response.headers().set(HttpHeaderNames.LOCATION, path);
         ctx.writeAndFlush(response).addListener(ChannelFutureListener.CLOSE);
     }
 
     private void sendError(ChannelHandlerContext ctx, HttpResponseStatus status) {
         FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1,
                 status, Unpooled.copiedBuffer("Failure : " + status.toString() + "\r\n", CharsetUtil.UTF_8));
-        response.headers().set(CONTENT_TYPE, "text/plain;charset=utf-8");
-        response.headers().set(ACCESS_CONTROL_ALLOW_ORIGIN, "*");
+        response.headers().set(HttpHeaderNames.CONTENT_TYPE, "text/plain;charset=utf-8");//text/plain是servlet默认的返回类型
+        response.headers().set(HttpHeaderNames.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
         ctx.writeAndFlush(response).addListener(ChannelFutureListener.CLOSE);
     }
 

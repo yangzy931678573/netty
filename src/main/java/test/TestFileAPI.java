@@ -1,5 +1,7 @@
 package test;
 
+import com.mysql.cj.x.protobuf.MysqlxDatatypes;
+
 import java.io.File;
 
 /**
@@ -7,8 +9,8 @@ import java.io.File;
  * Description: 测试File的API的使用
  */
 public class TestFileAPI {
-    public static void main(String[] args) {
-        File file = new File("src/main/java/");
+    public static void main(MysqlxDatatypes.Scalar.String[] args) {
+      /*  File file = new File("src/main/java/");
         System.out.println(file.exists() + ":" + file.getPath());
         file = new File(System.getProperty("user.dir") + File.separator + "/src/main/java");
         System.out.println(file.exists());
@@ -29,7 +31,7 @@ public class TestFileAPI {
             }
         } else {
             System.out.println("file not found");
-        }
-
+        }*/
+        Thread.currentThread().getContextClassLoader().getResourceAsStream("/db-queryies");
     }
 }

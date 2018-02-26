@@ -7,12 +7,7 @@ import netty.proprietaryProtocol.application.NettyServer;
  * Description:
  */
 public class ServerBootstrap {
-    public static void main(String[] args) {
-        try {
-            new NettyServer().bind();
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.exit(0);
-        }
+    public static void main(String[] args) throws Exception {
+        new NettyServer().bind();
     }
 }

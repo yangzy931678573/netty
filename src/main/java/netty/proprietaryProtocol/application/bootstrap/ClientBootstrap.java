@@ -8,12 +8,7 @@ import netty.proprietaryProtocol.constants.NettyConstant;
  * Description: 客户端启动器
  */
 public class ClientBootstrap {
-    public static void main(String[] args) {
-        try {
-            new NettyClient().connect(NettyConstant.PORT, NettyConstant.REMOTE_IP);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            System.exit(0);
-        }
+    public static void main(String[] args) throws Exception {
+        new NettyClient().connect(NettyConstant.PORT, NettyConstant.REMOTE_IP);
     }
 }

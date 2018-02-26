@@ -57,10 +57,10 @@ public class HttpFileServer {
                                     .addLast("http-aggregator", new HttpObjectAggregator(65536))
                                     .addLast("http-encoder", new HttpResponseEncoder())
 
-                                    //服务生成HTTP回应是无法确定消息大小的，比如大文件的下载，
-                                    // 或者后台需要复杂的逻辑才能全部处理页面的请求，这时用需要实时生成消息长度，服务器一般使用chunked编码。
+                                    //服务生成HTTP回应是无法确定消息大小的,比如大文件的下载,
+                                    // 或者后台需要复杂的逻辑才能全部处理页面的请求,这时用需要实时生成消息长度,服务器一般使用chunked编码.
 
-                                    // 在进行Chunked编码传输时，在回复消息的Headers有transfer-coding域值为chunked，
+                                    // 在进行Chunked编码传输时,在回复消息的Headers有transfer-coding域值为chunked,
                                     // 表示将用chunked编码传输内容
                                     .addLast("http-chunked", new ChunkedWriteHandler())//不添加则不能下载文件
                                     .addLast("fileServerHandler", new HttpFileServerHandler(url));

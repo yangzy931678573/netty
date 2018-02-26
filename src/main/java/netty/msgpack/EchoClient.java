@@ -13,7 +13,7 @@ import io.netty.handler.codec.LengthFieldPrepender;
 
 /**
  * Created by Administrator on 2017/12/25.
- * Description:
+ * Description: msg pack客户端
  */
 public class EchoClient {
     public static void main(String[] args) {

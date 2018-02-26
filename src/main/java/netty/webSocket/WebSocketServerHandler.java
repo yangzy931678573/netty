@@ -14,7 +14,6 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static io.netty.handler.codec.http.HttpHeaders.isKeepAlive;
 
 /**
  * Created by Administrator on 2018/1/2.
@@ -68,7 +67,7 @@ public class WebSocketServerHandler extends SimpleChannelInboundHandler<Object> 
             logger.fine(String.format("%s received %s", ctx.channel(), request));
         }
 
-        // 问题在与System.in这个流是同一个流,对于不同请求并不能做出处.
+        // 问题在与System.in这个流是同一个流,对于不同请求并不能做出不同处理.
         /*Scanner scanner = new Scanner(System.in);
         while (true) {
             String next = scanner.nextLine();//接收空格
@@ -94,7 +93,7 @@ public class WebSocketServerHandler extends SimpleChannelInboundHandler<Object> 
     }
 
     private void handleHttpRequest(ChannelHandlerContext ctx, FullHttpRequest request) {
-        if (!request.getDecoderResult().isSuccess() || !("webSocket").equalsIgnoreCase(request.headers().get("Upgrade"))) {
+        if (!request.decoderResult().isSuccess() || !("webSocket").equalsIgnoreCase(request.headers().get("Upgrade"))) {
             sendHttpResponse(ctx, request, new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.BAD_REQUEST));
             return;
         }
@@ -110,21 +109,21 @@ public class WebSocketServerHandler extends SimpleChannelInboundHandler<Object> 
 
     private void sendHttpResponse(ChannelHandlerContext ctx, FullHttpRequest request, DefaultFullHttpResponse response) {
         //返回应答到客户端
-        if (response.getStatus().code() != 200) {
-            ByteBuf buf = Unpooled.copiedBuffer(response.getStatus().toString(), CharsetUtil.UTF_8);
+        if (response.status().code() != 200) {
+            ByteBuf buf = Unpooled.copiedBuffer(response.status().toString(), CharsetUtil.UTF_8);
             response.content().writeBytes(buf);
             buf.release();//释放引用计数
             setContentLength(response, response.content().readableBytes());
         }
         //如果是非 Keep-Alive 连接，关闭连接
         ChannelFuture channelFuture = ctx.channel().writeAndFlush(response);
-        if (isKeepAlive(request) || response.getStatus().code() != 200) {
+        if (HttpUtil.isKeepAlive(request) || response.status().code() != 200) {
             channelFuture.addListener(ChannelFutureListener.CLOSE);
         }
     }
 
     private void setContentLength(DefaultFullHttpResponse response, int length) {
-        response.headers().set(HttpHeaders.Names.CONTENT_LENGTH, length);
+        response.headers().set(HttpHeaderNames.CONTENT_LENGTH, length);
     }
 
   /*  private class FutureMessage implements Callable<String> {

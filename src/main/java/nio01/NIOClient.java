@@ -7,6 +7,7 @@ package nio01;
 public class NIOClient {
     public static void main(String[] args) {
         int port = 8080;
-        new Thread(new TimeClientHandle("127.0.0.1",port),"TimeClientBootstrap-001").start();
+        for (int i = 0; i < 10; i++)
+            new Thread(new TimeClientHandle("127.0.0.1", port), "TimeClientBootstrap-001").start();
     }
 }

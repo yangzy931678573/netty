@@ -29,7 +29,7 @@ public class NettyClient {
     private ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
     EventLoopGroup group = new NioEventLoopGroup();
 
-    public void connect(int port, String host) throws InterruptedException {
+    public void connect(int port, String host) throws Exception {
         try {
             Bootstrap bootstrap = new Bootstrap();
             bootstrap.group(this.group)
@@ -57,7 +57,7 @@ public class NettyClient {
                 try {
                     TimeUnit.SECONDS.sleep(5);
                     connect(NettyConstant.PORT,NettyConstant.REMOTE_IP);//发起重连操作
-                } catch (InterruptedException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             });

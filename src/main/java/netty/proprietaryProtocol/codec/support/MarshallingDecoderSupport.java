@@ -7,6 +7,8 @@ import org.jboss.marshalling.ByteInput;
 import org.jboss.marshalling.Unmarshaller;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.URL;
 
 /**
  * Created by Administrator on 2018/1/4.

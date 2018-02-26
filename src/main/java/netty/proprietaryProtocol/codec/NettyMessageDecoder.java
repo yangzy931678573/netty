@@ -14,7 +14,8 @@ import java.util.Map;
 /**
  * Created by Administrator on 2018/1/3.
  * Description: Netty协议栈消息解码器
- *   解码多个序列化对象的关键：（1）是在编码序列化对象时把每个对象的长度编码到ByteBuf对象中，
+ *   解码多个序列化对象的关键：
+ *           （1）在编码序列化对象时把每个对象的长度编码到ByteBuf对象中，
  *           （2）在解码时读取到该长度并按照一定格式截取ByteBuf对象，
  *           （3）从而得到每一个序列化对象的ByteBuf对象并进行解析
  */
