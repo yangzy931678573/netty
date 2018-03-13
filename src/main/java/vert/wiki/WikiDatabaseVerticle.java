@@ -11,6 +11,7 @@ import io.vertx.ext.asyncsql.MySQLClient;
 import io.vertx.ext.sql.ResultSet;
 import io.vertx.ext.sql.SQLClient;
 import io.vertx.ext.sql.SQLConnection;
+import io.vertx.reactivex.ext.jdbc.JDBCClient;
 import vert.enumconst.QuerySql;
 import vert.enumconst.ErrorCodes;
 
@@ -59,6 +60,7 @@ public class WikiDatabaseVerticle extends AbstractVerticle {
                 LOGGER.error("Could not open a database connection", ar.cause());
                 startFuture.fail(ar.cause());
             } else {
+                //重点
                 SQLConnection connection = ar.result();
                 connection.execute(QuerySql.CREATE_PAGES_TABLE.sql(), asyncResult -> {
                     connection.close();
@@ -73,6 +75,15 @@ public class WikiDatabaseVerticle extends AbstractVerticle {
                 });
             }
         });
+        /**
+         * 使用 update 方法来执行更新数据库的操作（包括增、删、改）
+
+         当更新结束时，将执行回调方法处理结果 更新结果包装在 UpdateResult 对象中
+
+         您可以通过 getUpdated 方法获得更新的数据条数,并且如果更新操作有生成主键,可以通过 getKeys方法获得对应的主键
+         *
+         *
+         * */
     }
 
     private void onMessage(Message<JsonObject> message) {

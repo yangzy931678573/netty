@@ -6,7 +6,7 @@ import io.vertx.core.Future;
 
 /**
  * Created by Administrator on 2018/1/19.
- * Description: 新 Vertx Main 应用
+ * Description: 新 Vert.x Main 应用
  */
 public class MainVerticle extends AbstractVerticle {
 
@@ -21,7 +21,7 @@ public class MainVerticle extends AbstractVerticle {
             Future<String> deployment = Future.future();
             //利用反射才能部署多个Verticle实例
             vertx.deployVerticle("vert.wiki.HttpServerVerticle",
-                    new DeploymentOptions().setInstances(2),//设置 两个
+                    new DeploymentOptions().setInstances(2),//设置 两个实例
                     deployment.completer());
 
             return deployment;

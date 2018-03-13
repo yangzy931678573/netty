@@ -20,7 +20,7 @@ import io.netty.handler.stream.ChunkedWriteHandler;
  * Description: HTTP文件服务器
  */
 public class HttpFileServer {
-    private static final String ROOT = "/src/main/java/";
+    private static final String ROOT = "/src/main/";
 
     public static void main(String[] args) {
         int port = 8080;

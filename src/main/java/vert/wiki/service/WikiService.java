@@ -13,8 +13,8 @@ import io.vertx.core.json.JsonObject;
  */
 /*@ProxyGen*/
 public interface WikiService {
-
-    /*@Fluent
+/*
+    @Fluent
     WikiService fetchAllPages(Handler<AsyncResult<JsonArray>> resultHandler);
 
     @Fluent

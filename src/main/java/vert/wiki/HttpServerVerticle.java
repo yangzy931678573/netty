@@ -3,10 +3,12 @@ package vert.wiki;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Future;
 import io.vertx.core.eventbus.DeliveryOptions;
+import io.vertx.core.http.HttpMethod;
 import io.vertx.core.http.HttpServer;
 import io.vertx.core.json.JsonObject;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
+import io.vertx.ext.web.Route;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BodyHandler;
@@ -49,7 +51,27 @@ public class HttpServerVerticle extends AbstractVerticle {
         router.post("/create").handler(this::pageCreateHandler);
         router.post("/delete").handler(this::pageDeletionHandler);
 
-        int portNumber = config().getInteger(CONFIG_HTTP_SERVER_PORT, 8080);//后一个参数为默认值
+
+        Route route = router.route(HttpMethod.PUT, "myapi/orders")
+                .consumes("application/json")
+                .produces("application/json");
+
+        //将子路由器挂载到主路由器上
+        Router mainRouter = Router.router(vertx);
+        mainRouter.mountSubRouter("/productsAPI", router);
+        // 正确的方式
+        router.get().handler(ctx -> {
+            //使用一个新的参数重定向到另外一个路径
+            ctx.put("variable", "value").reroute("/final-target");//转发
+        });
+        route.handler(routingContext -> {
+
+            // 这会匹配所有路径以 `/myapi/orders` 开头,
+            // `content-type` 值为 `application/json` 并且 `accept` 值为 `application/json` 的 PUT 请求
+
+        });
+
+        int portNumber = config().getInteger(CONFIG_HTTP_SERVER_PORT, 80);//后一个参数为默认值
         server
                 .requestHandler(router::accept)
                 .listen(portNumber, ar -> {
