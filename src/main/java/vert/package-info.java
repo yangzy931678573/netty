@@ -1,4 +1,4 @@
-//@ModuleGen(name = "vertx-blueprint-todo-entity", groupPackage = "io.vertx.blueprint.todolist.entity")
+@ModuleGen(name = "vertx-microservice", groupPackage = "vert")
 package vert;
 
 import io.vertx.codegen.annotations.ModuleGen;

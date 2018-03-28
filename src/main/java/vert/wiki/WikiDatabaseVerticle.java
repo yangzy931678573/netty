@@ -3,6 +3,8 @@ package vert.wiki;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Future;
 import io.vertx.core.eventbus.Message;
+import io.vertx.core.http.HttpClient;
+import io.vertx.core.http.HttpClientOptions;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.core.logging.Logger;
@@ -11,7 +13,8 @@ import io.vertx.ext.asyncsql.MySQLClient;
 import io.vertx.ext.sql.ResultSet;
 import io.vertx.ext.sql.SQLClient;
 import io.vertx.ext.sql.SQLConnection;
-import io.vertx.reactivex.ext.jdbc.JDBCClient;
+import io.vertx.ext.web.client.WebClient;
+import io.vertx.servicediscovery.types.HttpEndpoint;
 import vert.enumconst.QuerySql;
 import vert.enumconst.ErrorCodes;
 
@@ -21,7 +24,6 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Properties;
 import java.util.stream.Collectors;
-
 /**
  * Created by Administrator on 2018/2/2.
  * Description: 数据库连接 Verticle
@@ -39,7 +41,6 @@ public class WikiDatabaseVerticle extends AbstractVerticle {
     public static final String CONFIG_WIKI_DB_SQL_QUERIES_RESOURCE_FILE = "wikiDb.sqlQueries.resource.file";
     public static final String CONFIG_WIKI_DB_QUEUE = "wikiDb.queue";
 
-
     private static final Logger LOGGER = LoggerFactory.getLogger(WikiDatabaseVerticle.class);
 
     @Override
@@ -54,6 +55,9 @@ public class WikiDatabaseVerticle extends AbstractVerticle {
                 .put("password", config().getString(CONFIG_WIKI_DB_MYSQL_PASSWORD, "Labbook_701"))
                 .put("database", config().getString(CONFIG_WIKI_DB_MYSQL_DATABASE, "testDb"))
                 .put("maxPoolSize", config().getInteger(CONFIG_WIKI_DB_MYSQL_MAX_POOL_SIZE, 10)));//连接池大小Integer
+
+        rx.Single<io.vertx.rxjava.ext.sql.SQLConnection> sqlConnectionSingle1 =
+                io.vertx.rxjava.ext.asyncsql.MySQLClient.newInstance(null).rxGetConnection();
 
         mysqlClient.getConnection(ar -> {
             if (ar.failed()) {

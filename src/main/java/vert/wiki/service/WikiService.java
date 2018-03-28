@@ -11,9 +11,8 @@ import io.vertx.core.json.JsonObject;
  * Created by Administrator on 2018/2/2.
  * Description:
  */
-/*@ProxyGen*/
+@ProxyGen
 public interface WikiService {
-/*
     @Fluent
     WikiService fetchAllPages(Handler<AsyncResult<JsonArray>> resultHandler);
 
@@ -27,5 +26,5 @@ public interface WikiService {
     WikiService savePage(int id, String markdown, Handler<AsyncResult<Void>> resultHandler);
 
     @Fluent
-    WikiService deletePage(int id, Handler<AsyncResult<Void>> resultHandler);*/
+    WikiService deletePage(int id, Handler<AsyncResult<Void>> resultHandler);
 }

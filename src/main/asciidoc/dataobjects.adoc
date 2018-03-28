@@ -1,0 +1,21 @@
+= Cheatsheets
+
+[[Company]]
+== Company
+
+++++
+ Created by Administrator on 2018/3/23.
+ Description :
+++++
+'''
+
+[cols=">25%,^25%,50%"]
+[frame="topbot"]
+|===
+^|Name | Type ^| Description
+|[[address]]`address`|`String`|-
+|[[companyNo]]`companyNo`|`String`|-
+|[[id]]`id`|`Number (int)`|-
+|[[name]]`name`|`String`|-
+|===
+

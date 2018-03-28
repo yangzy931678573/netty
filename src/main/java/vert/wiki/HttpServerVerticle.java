@@ -5,12 +5,14 @@ import io.vertx.core.Future;
 import io.vertx.core.eventbus.DeliveryOptions;
 import io.vertx.core.http.HttpMethod;
 import io.vertx.core.http.HttpServer;
+import io.vertx.core.http.HttpServerResponse;
 import io.vertx.core.json.JsonObject;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
 import io.vertx.ext.web.Route;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
+import io.vertx.ext.web.client.WebClient;
 import io.vertx.ext.web.handler.BodyHandler;
 import io.vertx.ext.web.templ.FreeMarkerTemplateEngine;
 
@@ -51,9 +53,10 @@ public class HttpServerVerticle extends AbstractVerticle {
         router.post("/create").handler(this::pageCreateHandler);
         router.post("/delete").handler(this::pageDeletionHandler);
 
-
         Route route = router.route(HttpMethod.PUT, "myapi/orders")
+                //设置默认接收json类型参数
                 .consumes("application/json")
+                //设置默认返回json类型参数
                 .produces("application/json");
 
         //将子路由器挂载到主路由器上
@@ -124,7 +127,7 @@ public class HttpServerVerticle extends AbstractVerticle {
                         context.fail(ar.cause());
                     }
                 });
-
+                HttpServerResponse response = context.response();
             } else {
                 context.fail(reply.cause());
             }
