@@ -8,11 +8,14 @@ import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -54,11 +57,11 @@ public class LambdaTest implements Supplier{
     public void test2() {
         System.out.println(new LambdaTest());
         int i = 0;
-      /*  //报错
-        Runnable runnable = () -> {
+        //报错
+        Runnable runnable1 = () -> {
              o = 0;
             System.out.println(i);//可以直接访问局部变量,但是不能赋值,原因是局部变量被认为是final类型
-        };*/
+        };
         Runnable runnable = new Runnable() {
             @Override
             public void run() {

@@ -55,6 +55,7 @@ public class TimeClientHandle implements Runnable {
                     try {
                         handelInput(key);
                     } catch (Exception e) {
+
                         if (key != null) {
                             key.cancel();
                             if (key.channel() != null) {

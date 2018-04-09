@@ -17,9 +17,8 @@ public class TestCallBack {
 }
 
 
-
 class Echo implements CallBack {
-        // 实际的业务方法
+    // 实际的业务方法
     @Override
     public void call(String result) {
         // While the server has a result , this method will invoke ;
@@ -38,13 +37,14 @@ class Answer {
         this.callBack = callBack;
     }
 
-    public void answer() {
+    public void answer(CallBack back) {
         if (this.status == 200)
             this.callBack.call("OK");
         else if (this.status == 300)
             this.callBack.call("Failed");
         else
             this.callBack.call("Wait");
+        back.call("This functional interface");
     }
 
     //这是事件总线,它会在程序执行时改变status,并主动通知回调
@@ -54,13 +54,14 @@ class Answer {
         if (this.callBack == null)
             return;
         if (this.status != 0)
-            answer();
+            answer((result) -> System.out.println(result));
         else {
             this.status = 400;
-            answer();
+            answer((result) -> System.out.println("support functional interface : " + result));
         }
     }
 }
+
 interface CallBack {
     void call(String result);
 }

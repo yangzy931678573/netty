@@ -11,6 +11,8 @@ import io.netty.handler.codec.http.websocketx.*;
 import io.netty.util.CharsetUtil;
 
 import java.util.Date;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -74,18 +76,18 @@ public class WebSocketServerHandler extends SimpleChannelInboundHandler<Object> 
             ctx.channel().writeAndFlush(new TextWebSocketFrame(next));//必须刷新
         }*/
         //callable接口的使用,没有必要!  Netty已经提供了线程组
-           /* FutureTask<String> task = new FutureTask(new FutureMessage());
-            new Thread(task).start();
-            try {
-                String result = task.get();
-                ctx.channel().writeAndFlush(new TextWebSocketFrame(result));
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-                ctx.channel().writeAndFlush(new
-                        TextWebSocketFrame(request + "欢迎使用Netty WebSocket服务，现在时刻:" + new Date().toString()));
-            }*/
+      /*  FutureTask task = new FutureTask(new FutureMessage());
+        new Thread(task).start();
+        try {
+            String result = task.get();
+            ctx.channel().writeAndFlush(new TextWebSocketFrame(result));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+            ctx.channel().writeAndFlush(new
+                    TextWebSocketFrame(request + "欢迎使用Netty WebSocket服务，现在时刻:" + new Date().toString()));
+        }*/
         // 显然可以看出Netty WebSocket 显然是可以处理多个连接的
         ctx.channel().write(new
            TextWebSocketFrame(request + "欢迎使用Netty WebSocket服务，现在时刻:" + new Date().toString()));
