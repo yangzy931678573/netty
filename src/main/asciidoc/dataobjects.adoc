@@ -1,7 +1,7 @@
 = Cheatsheets
 
-[[Company]]
-== Company
+[[Portfolio]]
+== Portfolio
 
 ++++
  Created by Administrator on 2018/3/23.
@@ -13,9 +13,7 @@
 [frame="topbot"]
 |===
 ^|Name | Type ^| Description
-|[[address]]`address`|`String`|-
-|[[companyNo]]`companyNo`|`String`|-
-|[[id]]`id`|`Number (int)`|-
-|[[name]]`name`|`String`|-
+|[[cash]]`cash`|`Number (double)`|-
+|[[shares]]`shares`|`Number (Integer)`|-
 |===
 

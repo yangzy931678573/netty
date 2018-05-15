@@ -17,12 +17,12 @@
 package vert;
 
 import io.vertx.core.json.JsonObject;
-import io.vertx.core.json.JsonArray;
+import vert.exercise.Company;
 
 /**
- * Converter for {@link vert.Company}.
+ * Converter for {@link Company}.
  *
- * NOTE: This class has been automatically generated from the {@link vert.Company} original class using Vert.x codegen.
+ * NOTE: This class has been automatically generated from the {@link Company} original class using Vert.x codegen.
  */
 public class CompanyConverter {
 

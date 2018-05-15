@@ -1,0 +1,83 @@
+.myHead {
+    padding: 10px;
+    line-height: 50px;
+    text-align: center;
+    font-size: 24px;
+}
+
+.myBorder1 {
+    border: 1px solid #F2F2F2;
+}
+
+.myBorder2 {
+    border: 1px solid #F2F2F2;
+}
+
+.myBorder3 {
+    border: 1px solid #F2F2F2;
+}
+
+.wine-red {
+    background-color: #701500;
+}
+
+.coffee {
+    background-color: #6d3704;
+}
+
+.radius1 {
+    border-radius: 10px
+}
+
+.radius2 {
+    border-radius: 15px
+}
+
+.radius3 {
+    border-radius: 25px
+}
+
+.top-radius1 {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.top-radius2 {
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.top-radius3 {
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+}
+
+.top-radius1-inner1 {
+    border-top-left-radius: 9px;
+    border-top-right-radius: 9px;
+}
+
+.top-radius2-inner1 {
+    border-top-left-radius: 14px;
+    border-top-right-radius: 14px;
+}
+
+.top-radius3-inner1 {
+    border-top-left-radius: 24px;
+    border-top-right-radius: 24px;
+}
+
+.top-radius1-inner2 {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.top-radius2-inner2 {
+    border-top-left-radius: 13px;
+    border-top-right-radius: 13px;
+}
+
+.top-radius3-inner2 {
+    border-top-left-radius: 23px;
+    border-top-right-radius: 23px;
+}

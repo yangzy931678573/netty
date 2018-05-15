@@ -1,0 +1,170 @@
+
+.login {
+    position: relative;
+    left: 0;
+    top: 0;
+    padding: 110px 0;
+    min-height: 100%;
+    box-sizing: border-box
+}
+
+.login-container, body, html {
+    height: 100%
+}
+
+.login-display-show {
+    display: block !important
+}
+
+.login-main {
+    width: 375px;
+    margin: 0 auto;
+    box-sizing: border-box
+}
+
+.login-box {
+    padding: 20px
+}
+
+.login-header {
+    text-align: center
+}
+
+.login-header h2 {
+    margin-bottom: 10px;
+    font-weight: 300;
+    font-size: 30px;
+    color: #000
+}
+
+.login-header p {
+    font-weight: 300;
+    color: #999
+}
+
+.login-body .layui-form-item {
+    position: relative
+}
+
+.login-main[bgimg] {
+    background-color: #fff;
+    box-shadow: 0 0 5px rgba(0, 0, 0, .05)
+}
+
+@media screen and (max-width: 768px) {
+    .login {
+        padding-top: 60px
+    }
+
+    .login-main {
+        width: 300px
+    }
+
+    .login-box {
+        padding: 10px
+    }
+}
+/*
+ 又浮动
+ */
+.right {
+    float: right;
+}
+/*
+ input框icon定位
+ */
+.login-icon {
+    position: absolute;
+    left: 1px;
+    top: 1px;
+    width: 38px;
+    line-height: 36px;
+    text-align: center;
+    color: #d2d2d2
+}
+
+/*
+ 验证码图片
+ */
+.login-vercode {
+    max-height: 38px;
+    width: 100%;
+    cursor: pointer;
+    box-sizing: border-box
+}
+/*
+ input框右移从而给input框加上icon
+ */
+.login-icon-left {
+    padding-left: 38px
+}
+
+.login-right-a {
+    color: #029789 !important;
+}
+
+.login-other {
+    position: relative;
+    font-size: 0;
+    line-height: 38px;
+    padding-top: 20px
+}
+
+.login-other > * {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 10px;
+    font-size: 14px
+}
+
+.login-other .layui-icon {
+    position: relative;
+    top: 2px;
+    font-size: 26px
+}
+
+.login-other a:hover {
+    opacity: .8
+}
+
+.layui-icon-login-qq {
+    color: #3492ED
+}
+
+.layui-icon-login-wechat {
+    color: #4DAF29
+}
+
+.layui-icon-login-weibo {
+    color: #CF1900
+}
+.footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    line-height: 30px;
+    padding: 20px;
+    text-align: center;
+    box-sizing: border-box;
+    color: rgba(0,0,0,.5);
+}
+/*
+ 设置全局样式
+ */
+::-moz-placeholder {
+    color: #ccc
+}
+
+::-webkit-input-placeholder {
+    color: #ccc
+}
+
+input:-ms-input-placeholder {
+    color: #ccc
+}
+
+html {
+    background-color: #f2f2f2;
+    color: #666
+}

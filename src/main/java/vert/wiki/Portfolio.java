@@ -26,12 +26,12 @@ public class Portfolio {
     }
 
     public Portfolio(JsonObject json) {
-        //PortfolioConverter.fromJson(json, this);
+        PortfolioConverter.fromJson(json, this);
     }
 
     public JsonObject toJson() {
         JsonObject json = new JsonObject();
-        //PortfolioConverter.toJson(this, json);
+        PortfolioConverter.toJson(this, json);
         return json;
     }
 

@@ -14,6 +14,7 @@ import io.vertx.ext.unit.junit.VertxUnitRunner;
 import io.vertx.ext.web.client.HttpRequest;
 import io.vertx.ext.web.client.HttpResponse;
 import io.vertx.ext.web.client.WebClient;
+import io.vertx.ext.web.codec.BodyCodec;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import vert.wiki.MainVerticle;
@@ -49,31 +50,52 @@ public class VerticleTest {
     public static void main(String[] args) {
         Vertx vertx = Vertx.vertx();
         WebClient webClient = WebClient.create(vertx);
-       /* webClient.post(9002, "127.0.0.1", "/updateScores").send(asyncResult -> {
+      /*  webClient.get(8080, "127.0.0.1", "/index").send(asyncResult -> {
             if (asyncResult.succeeded()) {
                 HttpResponse<Buffer> response = asyncResult.result();
                 System.out.println("Received response with status code : " + response.statusCode());
                 System.out.println(response.bodyAsBuffer().toString());
+                vertx.close();
             } else {
-                System.out.println("Something went wrong " + asyncResult.cause().getMessage());
+                System.out.println("Something went wrong : " + asyncResult.cause().getMessage());
             }
         });*/
-       //HTTPClientApi
+        webClient.get(443,"www.hao123.com","/")//get方法是组合路径 ,getAbs是全路径
+                .addQueryParam("tn","93006350_hao_pg")
+                //.as(BodyCodec.jsonObject())解码http response
+                .timeout(5000)
+                .ssl(true)
+                .send(asyncResult -> {
+            if (asyncResult.succeeded()) {
+                HttpResponse<Buffer> response = asyncResult.result();
+                System.out.println("Received response with status code : " + response.statusCode());
+                System.out.println(response.bodyAsBuffer().toString());
+                vertx.close();
+            } else {
+                System.out.println("Something went wrong : " + asyncResult.cause().getMessage());
+            }
+        });
+
+        //HTTPClientApi
        /*      HttpClient httpClient = vertx.createHttpClient(new HttpClientOptions()
                 .setDefaultHost("127.0.0.1")
                 .setMaxPoolSize(20)
                 .setDefaultPort(8080));  */
-        HttpClient httpClient = vertx.createHttpClient();
+       /* HttpClient httpClient = vertx.createHttpClient();
         HttpClientRequest request = httpClient.get(8080, "127.0.0.1", "/index").handler(response -> {
             response.exceptionHandler(t -> {
                 t.printStackTrace();
                 httpClient.close();
+                System.out.println("close");
             });
-            if (response.statusCode() == 200)
-                response.bodyHandler(buffer -> System.out.println(buffer.toString()));
+            response.bodyHandler(buffer -> {
+                System.out.println(buffer.toString());
+                httpClient.close();
+                System.out.println("close");
+            });
         }).putHeader("Accept", "application/json")
                 .setTimeout(3000)
-                .exceptionHandler(throwable -> throwable.printStackTrace());
+                .exceptionHandler(throwable -> throwable.printStackTrace());*/
        /* HttpClientRequest request = httpClient.get("/index", response -> {
             response.exceptionHandler(t -> {
                 t.printStackTrace();
@@ -83,9 +105,10 @@ public class VerticleTest {
                 response.bodyHandler(buffer -> System.out.println(buffer.toString()));
         }).putHeader("Accept", "application/json")
                 .setTimeout(3000)
-                .exceptionHandler(throwable -> throwable.printStackTrace());*/
-        request.end();
-
+                .exceptionHandler(throwable -> throwable.printStackTrace());
+       request.end();
+       */
+        System.out.println("end");
     }
 
    /* @Before
