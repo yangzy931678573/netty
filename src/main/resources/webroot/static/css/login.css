@@ -19,7 +19,9 @@
 .login-main {
     width: 375px;
     margin: 0 auto;
-    box-sizing: border-box
+    box-sizing: border-box;
+    border-radius: 25px;
+    background: rgba(0, 0, 0, 0.2);
 }
 
 .login-box {
@@ -30,16 +32,11 @@
     text-align: center
 }
 
-.login-header h2 {
-    margin-bottom: 10px;
-    font-weight: 300;
-    font-size: 30px;
-    color: #000
-}
 
 .login-header p {
     font-weight: 300;
-    color: #999
+    font-size: 16px;
+    color: #029789;
 }
 
 .login-body .layui-form-item {
@@ -55,11 +52,9 @@
     .login {
         padding-top: 60px
     }
-
     .login-main {
         width: 300px
     }
-
     .login-box {
         padding: 10px
     }
@@ -138,17 +133,7 @@
 .layui-icon-login-weibo {
     color: #CF1900
 }
-.footer {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    line-height: 30px;
-    padding: 20px;
-    text-align: center;
-    box-sizing: border-box;
-    color: rgba(0,0,0,.5);
-}
+
 /*
  设置全局样式
  */
@@ -165,6 +150,6 @@ input:-ms-input-placeholder {
 }
 
 html {
-    background-color: #f2f2f2;
-    color: #666
+    background: url("./imgs/bg-1.jpg");
 }
+

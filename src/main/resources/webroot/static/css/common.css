@@ -1,3 +1,6 @@
+.layui-form-checkbox span{
+    color: #029789 !important
+}
 .myHead {
     padding: 10px;
     line-height: 50px;
@@ -16,19 +19,20 @@
 .myBorder3 {
     border: 1px solid #F2F2F2;
 }
-
-.wine-red {
+.c-green{
+    color: #029789 !important
+}
+.bg-wine-red {
     background-color: #701500;
 }
 
-.coffee {
+.bg-coffee {
     background-color: #6d3704;
 }
 
 .radius1 {
     border-radius: 10px
 }
-
 .radius2 {
     border-radius: 15px
 }
@@ -37,47 +41,25 @@
     border-radius: 25px
 }
 
-.top-radius1 {
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+/*
+ 以下是属性选择器
+ */
+input[lay-bg="transparent"] {
+    background-color: transparent;
+    border-color: #eaf4ff;
+    border-radius: 10px;
 }
-
-.top-radius2 {
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
+input[lay-bg="transparent"]:hover{
+    border-color: #8133a9 !important;
 }
-
-.top-radius3 {
-    border-top-left-radius: 25px;
-    border-top-right-radius: 25px;
+input[lay-bg="transparent"]:focus{
+    border-color: #8133a9 !important;
 }
-
-.top-radius1-inner1 {
-    border-top-left-radius: 9px;
-    border-top-right-radius: 9px;
+button[lay-bg="transparent"]{
+    background-color: transparent;
+    border: 1px solid #f9fcf4;
+    border-radius: 10px;
 }
-
-.top-radius2-inner1 {
-    border-top-left-radius: 14px;
-    border-top-right-radius: 14px;
-}
-
-.top-radius3-inner1 {
-    border-top-left-radius: 24px;
-    border-top-right-radius: 24px;
-}
-
-.top-radius1-inner2 {
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-}
-
-.top-radius2-inner2 {
-    border-top-left-radius: 13px;
-    border-top-right-radius: 13px;
-}
-
-.top-radius3-inner2 {
-    border-top-left-radius: 23px;
-    border-top-right-radius: 23px;
+button[lay-bg="transparent"]:hover{
+    background-color: #53cfff;
 }
