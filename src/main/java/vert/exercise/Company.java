@@ -7,7 +7,7 @@ import io.vertx.core.json.JsonObject;
  * Created by Administrator on 2018/3/23.
  * Description :
  */
-//@DataObject(generateConverter = true)
+@DataObject(generateConverter = true)
 public class Company {
 
     private int id;
@@ -24,16 +24,15 @@ public class Company {
         this.name = other.name;
         this.address = other.address;
     }
-   /* public Company(JsonObject json) {
-        CompanyConverter.fromJson(json, this);
+    public Company(JsonObject json) {
+        //CompanyConverter.fromJson(json, this);
     }
 
     public JsonObject toJson() {
         JsonObject json = new JsonObject();
-        CompanyConverter.toJson(this, json);
+       // CompanyConverter.toJson(this, json);
         return json;
     }
-*/
     public int getId() {
         return id;
     }

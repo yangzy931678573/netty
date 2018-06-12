@@ -1,8 +1,8 @@
 package vert.wiki;
 
-import io.vertx.codegen.annotations.DataObject;
 import io.vertx.core.json.JsonObject;
 
+import java.time.Instant;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -10,12 +10,14 @@ import java.util.TreeMap;
  * Created by Administrator on 2018/3/23.
  * Description :
  */
-@DataObject(generateConverter = true)
 public class Portfolio {
 
     private Map<String, Integer> shares = new TreeMap<>();
 
     private double cash;
+    //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DateTimeFormatter.ISO_INSTANT, locale = "zh", timezone = "GMT+8")
+    private Instant date;
+
 
     public Portfolio() {
     }
@@ -23,6 +25,7 @@ public class Portfolio {
     public Portfolio(Portfolio other) {
         this.shares = new TreeMap<>(other.shares);
         this.cash = other.cash;
+        this.date = other.date;
     }
 
     public Portfolio(JsonObject json) {
@@ -53,6 +56,13 @@ public class Portfolio {
         this.cash = cash;
         return this;
     }
+    public Instant getDate() {
+        return date;
+    }
+
+    public void setDate(Instant date) {
+        this.date = date;
+    }
 
     // -- Additional method
 
@@ -69,5 +79,14 @@ public class Portfolio {
             return 0;
         }
         return current;
+    }
+
+    @Override
+    public String toString() {
+        return "Portfolio{" +
+                "shares=" + shares +
+                ", cash=" + cash +
+                ", date=" + date +
+                '}';
     }
 }

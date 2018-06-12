@@ -15,6 +15,17 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;*/
 
+import io.vertx.core.json.JsonObject;
+import io.vertx.ext.web.Router;
+import io.vertx.ext.web.RoutingContext;
+import vert.wiki.Portfolio;
+
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.HashMap;
+
 /**
  * Created by Administrator on 2018/5/10.
  * Description : vertx 测试类
@@ -23,6 +34,20 @@ import org.junit.runner.RunWith;*/
 @ExtendWith(VertxExtension.class)
 @Nested*/
 public class MainTest {
+    public static void main(String[] args) {
+        JsonObject object = new JsonObject();
+       /* SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");*/
+        HashMap<String, Integer> map = new HashMap<>();
+        map.put("share1",10);
+        object.put("shares",map).put("cash",1.0).put("date",Instant.now() );
+        System.out.println( new Portfolio(object));
+       /* Portfolio portfolio = object.mapTo(Portfolio.class);
+        System.out.println(portfolio);*/
+        LocalDateTime parse = LocalDateTime.parse("2016-09-01T11:55:01");
+        System.out.println(parse);
+        LocalDateTime parse2 = parse.plusDays(-1);
+        System.out.println(parse2);
+    }
    /* Vertx vertx;
 
     @BeforeEach
