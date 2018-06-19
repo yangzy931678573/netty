@@ -66,3 +66,17 @@ button[lay-bg="transparent"]{
 button[lay-bg="transparent"]:hover{
     background-color: #53cfff;
 }
+
+.search-icon {
+    position: absolute;
+    left: 145px;
+    top: 1px;
+    width: 38px;
+    line-height: 36px;
+    text-align: right;
+    color: #828481
+}
+.search-icon:hover{
+    cursor: pointer;
+    color: #960082;
+}
